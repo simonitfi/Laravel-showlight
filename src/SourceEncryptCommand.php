@@ -120,8 +120,33 @@ class SourceEncryptCommand extends Command
         if (!empty($matches[0])) {
             $fileContents = preg_replace($pattern, '', $fileContents);
         }
+        
+        $tokens = token_get_all($fileContents);
+
+        $code = '';
+        foreach ($tokens as $key =>  $token) {
+            if (is_array($token)) {
+                $match = array();
+                preg_match('/[a-z]+$/', $token[1], $match );
+
+                if( token_name($token[0]) == 'T_STRING'  ){
+                    $code .= $token[1];
+                    continue;
+                }
+
+                if( empty($match[0]) ){
+                    $code .=  $token[1];
+                    continue;
+                }
+                $code .= '{'.$token[1].'}';
+
+            }else{
+                $code .= $token;
+            }
+        }
+        
         /*$cipher = bolt_encrypt('?> ' . $fileContents, $key);*/
-        $cipher = showlight_encrypt($fileContents);
+        $cipher = showlight_encrypt($code);
         File::put(base_path("$destination/$filePath"), $prepend.$cipher);
 
         unset($cipher);
