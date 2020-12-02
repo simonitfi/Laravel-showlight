@@ -40,7 +40,7 @@ class SourceEncryptCommand extends Command
      */
     public function handle()
     {
-        if (!extension_loaded('bolt')) {
+        if (!extension_loaded('showlight')) {
             $this->error('Please install showlight_enc.so');
             $this->error('PHP Version '.phpversion());
             $this->error('INI file location '.php_ini_scanned_files());
