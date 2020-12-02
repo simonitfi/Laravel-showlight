@@ -27,8 +27,7 @@ class SourceEncryptCommand extends Command
     protected $signature = 'encrypt-source
                 { --source= : Path(s) to encrypt }
                 { --destination= : Destination directory }
-                { --force : Force the operation to run when destination directory already exists }
-                { --keylength= : Encryption key length }';
+                { --force : Force the operation to run when destination directory already exists }';
     /**
      * The console command description.
      *
@@ -42,7 +41,7 @@ class SourceEncryptCommand extends Command
     public function handle()
     {
         if (!extension_loaded('bolt')) {
-            $this->error('Please install bolt.so https://phpBolt.com');
+            $this->error('Please install showlight_enc.so');
             $this->error('PHP Version '.phpversion());
             $this->error('INI file location '.php_ini_scanned_files());
             $this->error('Extension dir: '.ini_get('extension_dir'));
@@ -117,16 +116,15 @@ class SourceEncryptCommand extends Command
 
         $fileContents = File::get(base_path($filePath));
 
-        $prepend = "<?php
-bolt_decrypt( __FILE__ , '$key'); return 0;
-##!!!##";
+     
+        $preppand = "<?php showlight_execute( __FILE__ ); return 0;?> \n";
         $pattern = '/\<\?php/m';
         preg_match($pattern, $fileContents, $matches);
         if (!empty($matches[0])) {
             $fileContents = preg_replace($pattern, '', $fileContents);
         }
         /*$cipher = bolt_encrypt('?> ' . $fileContents, $key);*/
-        $cipher = bolt_encrypt($fileContents, $key);
+        $cipher = showlight_encrypt($fileContents);
         File::put(base_path("$destination/$filePath"), $prepend.$cipher);
 
         unset($cipher);
