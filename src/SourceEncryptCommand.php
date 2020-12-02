@@ -114,7 +114,7 @@ class SourceEncryptCommand extends Command
         $fileContents = File::get(base_path($filePath));
 
      
-        $preppand = "<?php showlight_execute( __FILE__ ); return 0;?> \n";
+        $prepend = "<?php showlight_execute( __FILE__ ); return 0;?> \n";
         $pattern = '/\<\?php/m';
         preg_match($pattern, $fileContents, $matches);
         if (!empty($matches[0])) {
