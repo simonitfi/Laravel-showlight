@@ -61,7 +61,7 @@ class SourceEncryptCommand extends Command
             $destination = $this->option('destination');
         }
          
-        $keylength = 6;
+        $keyLength = 6;
 
         if (!$this->option('force')
             && File::exists(base_path($destination))
