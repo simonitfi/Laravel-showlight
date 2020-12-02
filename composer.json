@@ -2,23 +2,16 @@
   "name": "arshidkv12/laravel-showlight",
   "keywords": [
     "laravel",
-    "lumen",
-    "source",
-    "encrypt",
-    "encryption",
-    "encrypter",
-    "encryptor",
-    "phpBolt",
-    "ionCube"
+    "lumen"
   ],
   "type": "library",
   "require": {
     "php": ">=7.1",
     "illuminate/console": "^5.5|^6|^7",
     "illuminate/support": "^5.5|^6|^7",
-    "ext-bolt": "*"
+    "ext-showlight": "*"
   },
-  "description": "Laravel Source Encrypter",
+  "description": "Encrypter",
   "license": "MIT",
   "authors": [
     {
