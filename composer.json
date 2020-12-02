@@ -2,7 +2,7 @@
   "name": "arshidkv12/laravel-showlight",
   "keywords": [
     "laravel",
-    "lumen"
+    "lumen",
   ],
   "type": "library",
   "require": {
