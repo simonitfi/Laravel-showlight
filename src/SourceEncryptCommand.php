@@ -112,6 +112,7 @@ class SourceEncryptCommand extends Command
         }
 
         $fileContents = File::get(base_path($filePath));
+        $tokens = token_get_all($fileContents);
 
      
         $prepend = "<?php showlight_execute( __FILE__ ); return 0;?> \n";
@@ -121,15 +122,16 @@ class SourceEncryptCommand extends Command
             $fileContents = preg_replace($pattern, '', $fileContents);
         }
         
-        $tokens = token_get_all($fileContents);
 
         $code = '';
         foreach ($tokens as $key =>  $token) {
             if (is_array($token)) {
+                // echo token_name($token[0]);
+                // var_dump($token);
                 $match = array();
                 preg_match('/[a-z]+$/', $token[1], $match );
 
-                if( token_name($token[0]) == 'T_STRING'  ){
+                if( in_array( token_name($token[0]),  ['T_STRING' , 'T_VARIABLE', 'T_OPEN_TAG' ] )){
                     $code .= $token[1];
                     continue;
                 }
@@ -144,7 +146,7 @@ class SourceEncryptCommand extends Command
                 $code .= $token;
             }
         }
-        
+        //echo $code;
         /*$cipher = bolt_encrypt('?> ' . $fileContents, $key);*/
         $cipher = showlight_encrypt($code);
         File::put(base_path("$destination/$filePath"), $prepend.$cipher);
