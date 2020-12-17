@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
  * Laravel Source Encrypter.
  *
