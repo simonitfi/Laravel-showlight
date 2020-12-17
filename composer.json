@@ -1,5 +1,5 @@
 {
-  "name": "arshidkv12/laravel-showlight",
+  "name": "simonitfi/laravel-showlight",
   "keywords": [
     "laravel",
     "lumen"
@@ -14,8 +14,8 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Arshid",
-      "email": "arshidkv12@gmail.com"
+      "name": "Simonit",
+      "email": "support@simonit.fi"
     }
   ],
   "autoload": {
