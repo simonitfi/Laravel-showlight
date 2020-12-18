@@ -1,5 +1,4 @@
-<?php
- 
+<?php 
 /**
  * Laravel Source Encrypter.
  *
@@ -60,7 +59,7 @@ class SourceEncryptCommand extends Command
         } else {
             $destination = $this->option('destination');
         }
-         
+
         $keyLength = 6;
 
         if (!$this->option('force')
@@ -106,7 +105,12 @@ class SourceEncryptCommand extends Command
         }
 
         if (File::extension($filePath) != 'php') {
-            File::copy(base_path($filePath), base_path("$destination/$filePath"));
+
+$filename = base_path("$destination/$filePath");
+            $dirname = dirname($filename);
+            if (!is_dir($dirname) && !file_exists($dirname )) {
+                mkdir($dirname, 0755, true);
+            }            File::copy(base_path($filePath), base_path("$destination/$filePath"));
 
             return;
         }
@@ -114,14 +118,14 @@ class SourceEncryptCommand extends Command
         $fileContents = File::get(base_path($filePath));
         $tokens = token_get_all($fileContents);
 
-     
+
         $prepend = "<?php showlight_execute( __FILE__ ); return 0;?> \n";
         $pattern = '/\<\?php/m';
         preg_match($pattern, $fileContents, $matches);
         if (!empty($matches[0])) {
             $fileContents = preg_replace($pattern, '', $fileContents);
         }
-        
+
 
         $code = '';
         foreach ($tokens as $key =>  $token) {
@@ -145,6 +149,13 @@ class SourceEncryptCommand extends Command
             }else{
                 $code .= $token;
             }
+        }
+
+
+        $filename = base_path("$destination/$filePath");
+        $dirname = dirname($filename);
+        if (!is_dir($dirname)) {
+            mkdir($dirname, 0755, true);
         }
         //echo $code;
         /*$cipher = bolt_encrypt('?> ' . $fileContents, $key);*/
