@@ -75,7 +75,7 @@ class SourceEncryptCommand extends Command
         File::makeDirectory(base_path($destination));
 
         foreach ($sources as $source) {
-            @File::makeDirectory($destination.'/'.File::dirname($source), 493, true);
+            @File::makeDirectory($destination.'/'.File::dirname($source), 777, true);
 
             if (File::isFile($source)) {
                 self::encryptFile($source, $destination, $keyLength);
@@ -98,7 +98,7 @@ class SourceEncryptCommand extends Command
         $key = Str::random($keyLength);
         if (File::isDirectory(base_path($filePath))) {
             if (!File::exists(base_path($destination.$filePath))) {
-                File::makeDirectory(base_path("$destination/$filePath"), 493, true);
+                File::makeDirectory(base_path("$destination/$filePath"), 777, true);
             }
 
             return;
@@ -106,10 +106,10 @@ class SourceEncryptCommand extends Command
 
         if (File::extension($filePath) != 'php') {
 
-$filename = base_path("$destination/$filePath");
+            $filename = base_path("$destination/$filePath");
             $dirname = dirname($filename);
             if (!is_dir($dirname) && !file_exists($dirname )) {
-                mkdir($dirname, 0755, true);
+                mkdir($dirname, 0777, true);
             }            File::copy(base_path($filePath), base_path("$destination/$filePath"));
 
             return;
@@ -152,10 +152,10 @@ $filename = base_path("$destination/$filePath");
         }
 
 
-        $filename = base_path("$destination/$filePath");
+$filename = base_path("$destination/$filePath");
         $dirname = dirname($filename);
         if (!is_dir($dirname)) {
-            mkdir($dirname, 0755, true);
+            mkdir($dirname, 0777, true);
         }
         //echo $code;
         /*$cipher = bolt_encrypt('?> ' . $fileContents, $key);*/
